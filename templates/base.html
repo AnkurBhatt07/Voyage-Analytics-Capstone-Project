@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Price Predictor</title>
+
+    <style>
+        body {
+            font-family : Arial, sans-serif;
+            background: linear-gradient(120deg,#e0f7fa,#ffffff);
+            margin:0;
+            padding:0;
+        }
+        .container {
+            width:50%;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align:center;
+            color:#00796b;
+        }
+        label {
+            font-weight: bold;
+
+        }
+        input  , select {
+            width:100%;
+            padding:10px;
+            margin:8px 0 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+    
+        }
+
+        button {
+            width:100%;
+            background-color: #00796b;
+            color:white;
+            padding:12px;
+            border:none;
+            border-radius:5px;
+            font-size:16px;
+            cursor:pointer;
+
+        }
+
+        button:hover {
+            background-color: #004d40;
+        }
+
+        .result {
+            text-align:center;
+            font-size:20px;
+            margin-top:20px;
+            color:#2e7d32;
+        }
+
+        .back {
+            margin-top:20px;
+            text-align:center;
+        }
+
+        .back a {
+            text-decoration:none;
+            color:#00796b;
+            font-weight:bold;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class = 'container'>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

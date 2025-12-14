@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> 
+    Flight Price Prediction
+</h1>
+
+<form action="/predict" method = "post">
+    <label for="from">From City</label>
+    <select name="from" required>
+        {% for city in cities %}
+            <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="to">To City</label>
+    <select name="to" required>
+        {% for city in cities %}
+            <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="flightType">Flight Type</label>
+    <select name="flightType" >
+        {% for ftype in flight_types %}
+            <option value="{{ ftype }}">{{ ftype }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="agency">Agency</label>
+    <select name="agency" required>
+        {% for agency in agencies %}
+            <option value="{{ agency }}">{{ agency }}</option>
+        {% endfor %}
+    </select>  
+    
+
+    <label for="date">Travel Date</label>
+    <input type="date" name="date" min="{{ min_date }}" max="{{ max_date }}" required>
+
+    <button type = "submit">Predict Price</button>
+
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> Flight Price Prediction Result</h1>
+
+{% if error %}
+    <div class = "result" style = "color : red;">
+        <p><strong>Error:</strong>{{error}}</p>
+    </div>
+{% else %}
+    <div class = "result">
+        <p><strong>Predicted Flight Price:</strong> ${{prediction}}</p>
+        <p style = "font-size: 28px;">$ {{prediction}}</p>
+    </div>
+    <hr>
+
+    <h3>Flight Details Used</h3>
+    <ul>
+        <li><b>From:</b>{{data.from}}</li>
+        <li><b>To:</b>{{data.to}}</li>
+        <li><b>Flight Type:</b>{{data.flightType}}</li>
+        <li><b>Agency:</b>{{data.agency}}</li>
+        <li><b>Date of Travel:</b>{{data.date}}</li>
+
+    </ul>
+
+
+{% endif %}
+
+
+<br>
+
+
+<a href="/">
+    <button>Predict Another Flight</button>
+</a>
+{% endblock %}
