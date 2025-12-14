@@ -1,0 +1,10 @@
+travel_venv/
+mlruns/
+data/
+notebooks/
+.git/
+.gitignore
+__pycache__/
+*.pyc
+*ipynb 
+mlflow.db
