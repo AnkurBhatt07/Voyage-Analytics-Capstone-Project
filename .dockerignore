@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 *ipynb 
 mlflow.db
+jenkins_data/
