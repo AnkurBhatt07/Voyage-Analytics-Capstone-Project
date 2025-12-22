@@ -62,7 +62,7 @@ Build a regression model to predict the price of a flight using the flights.csv 
 
 
 
-
+Project Github Repository: [https://github.com/AnkurBhatt07/Voyage-Analytics-Capstone-Project.git]
 
 
 
