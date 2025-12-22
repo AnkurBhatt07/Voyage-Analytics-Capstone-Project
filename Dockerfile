@@ -14,8 +14,11 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copy entire project
-COPY . .
+# 5. Copy application code and dependencies
+COPY app.py .
+COPY pipeline/ pipeline/
+COPY templates/ templates/
+COPY artifacts/ artifacts/
 
 # 6. Expose flask port
 EXPOSE 8000

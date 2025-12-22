@@ -9,7 +9,7 @@ from pipeline.preprocessing import FlightPreprocessor
 class FlightPricePredictor:
     def __init__(self):
         self.model = pickle.load(
-            open("artifacts/grad_boost_best.pkl",'rb')
+            open("artifacts/grad_boost_best_airflow.pkl",'rb')
         )
 
         self.preprocessor = FlightPreprocessor()
