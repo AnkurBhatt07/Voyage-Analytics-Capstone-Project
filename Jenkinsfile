@@ -33,20 +33,20 @@ pipeline {
             }
         }
 
-        stage("Load Image into Minikube") {
-            steps {
-                sh "minikube image load ${IMAGE_NAME}:${IMAGE_TAG}"
-            }
-        }
+        // stage("Load Image into Minikube") {
+        //     steps {
+        //         sh "minikube image load ${IMAGE_NAME}:${IMAGE_TAG}"
+        //     }
+        // }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh """
-                kubectl apply -f flight-price-deployment.yaml
-                kubectl apply -f flight-price-service.yaml
-                """
-            }
-        } 
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         sh """
+        //         kubectl apply -f flight-price-deployment.yaml
+        //         kubectl apply -f flight-price-service.yaml
+        //         """
+        //     }
+        // } 
 
     }
 
