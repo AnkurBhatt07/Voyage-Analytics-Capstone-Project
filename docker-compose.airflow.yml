@@ -20,11 +20,15 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       PYTHONPATH: /opt/airflow 
+      AIRFLOW__WEBSERVER__SECRET_KEY: "flight-mlops-secret-key"
+      AIRFLOW__LOGGING__REMOTE_LOGGING: "False"
+      AIRFLOW__LOGGING__BASE_LOG_FOLDER: "/opt/airflow/logs"
     volumes:
       - ./dags:/opt/airflow/dags
       - ./training:/opt/airflow/training
       - ./data:/opt/airflow/data
       - ./artifacts:/opt/airflow/artifacts
+      - ./mlruns:/opt/airflow/mlruns
     ports:
       - "8082:8080"
     command: airflow webserver
@@ -40,11 +44,15 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       PYTHONPATH: /opt/airflow
+      AIRFLOW__WEBSERVER__SECRET_KEY: "flight-mlops-secret-key"
+      AIRFLOW__LOGGING__REMOTE_LOGGING: "False"
+      AIRFLOW__LOGGING__BASE_LOG_FOLDER: "/opt/airflow/logs"
     volumes:
       - ./dags:/opt/airflow/dags
       - ./training:/opt/airflow/training
       - ./data:/opt/airflow/data
       - ./artifacts:/opt/airflow/artifacts
+      - ./mlruns:/opt/airflow/mlruns
     command: airflow scheduler
 
 volumes:

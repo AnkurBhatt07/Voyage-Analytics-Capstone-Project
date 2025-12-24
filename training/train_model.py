@@ -113,6 +113,11 @@ def train_and_save_model():
     X , y = preprocess_data(df , artifacts_path=artifacts_dir)
     X_train , X_val , y_train , y_val = train_test_split(X , y , test_size=0.2 , random_state=best_params['random_state'])
 
+
+    mlflow.set_tracking_uri("file:/opt/airflow/mlruns")
+    mlflow.set_experiment("flight_price_baseline")
+
+
     with mlflow.start_run(run_name = 'gradient_boost_airflow_retraining'):
         model = train_model(X_train , y_train)
         mae , rmse , r2 = evaluate_model(model , X_val , y_val)
