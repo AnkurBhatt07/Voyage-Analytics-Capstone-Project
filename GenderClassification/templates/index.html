@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Prediction</title>
+</head>
+<body>
+    <h2>Gender Prediction</h2>
+    <form action="/predict" method = "post">
+
+        {% for col in feature_columns %}
+            <label>{{col}}:</label><br>
+            <input type="text" name = "{{col}}" required> <br><br>
+
+        {% endfor %}
+        <button type = 'submit'>Predict</button>
+    </form>
+</body>
+</html>
