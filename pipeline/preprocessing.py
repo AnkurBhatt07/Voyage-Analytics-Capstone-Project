@@ -84,11 +84,24 @@ class FlightPreprocessor:
 
         # Date preprocessing
 
-        df['date'] = pd.to_datetime(df['date'])
-        df['year'] = df['date'].dt.year
-        df['month'] = df['date'].dt.month
-        df['day_of_week'] = df['date'].dt.dayofweek
-        df['day_of_month'] = df['date'].dt.day
+        df["date"] = pd.to_datetime(df["date"])
+
+        df["year"] = df["date"].dt.year
+        df["month"] = df["date"].dt.month
+        df["day_of_week"] = df["date"].dt.dayofweek
+        df["day_of_month"] = df["date"].dt.day
+
+        df["quarter"] = df["date"].dt.quarter
+
+        df["is_weekend"] = (df["day_of_week"].isin([5, 6])).astype(int)
+
+        df["month_sin"] = np.sin(2 * np.pi * df["month"] / 12)
+
+        df["month_cos"] = np.cos(2 * np.pi * df["month"] / 12)
+
+        df["dow_sin"] = np.sin(2 * np.pi * df["day_of_week"] / 7)
+
+        df["dow_cos"] = np.cos(2 * np.pi * df["day_of_week"] / 7)
 
         date_features_scaled = self.date_scaler.transform(df[self.date_cols])
 

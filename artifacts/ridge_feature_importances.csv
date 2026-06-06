@@ -1,0 +1,35 @@
+feature_name,importance
+from_Sao Paulo (SP),231.76180956676856
+from_Florianopolis (SC),220.76735205739487
+flightType_scaled,216.10958136956242
+from_Salvador (BH),212.6794009851461
+from_Brasilia (DF),174.26852923289377
+distance_transformed,163.71614286775701
+time_transformed,142.71708256716568
+from_Natal (RN),94.83973200432945
+to_Rio de Janeiro (RJ),86.73950300818083
+from_Campo Grande (MS),80.94194232418417
+to_Aracaju (SE),59.58768403620683
+from_Aracaju (SE),53.59119317884175
+from_Rio de Janeiro (RJ),52.3420550813948
+to_Natal (RN),49.71747543498275
+to_Sao Paulo (SP),49.23411105559621
+from_Recife (PE),42.43201181561609
+to_Brasilia (DF),9.833804379398448
+to_Recife (PE),7.251397543904681
+to_Salvador (BH),4.3122649542165545
+to_Florianopolis (SC),3.5016970494875816
+agency_FlyingDrops,2.6942030513454385
+dow_sin_scaled,2.428824348963154
+agency_CloudFy,2.1448663665263354
+is_weekend_scaled,1.8878609623070883
+to_Campo Grande (MS),1.769290664535867
+dow_cos_scaled,1.0714958464441575
+agency_Rainbow,0.5493366840113914
+day_of_week_scaled,0.5443090418907288
+month_scaled,0.5183552029708013
+month_cos_scaled,0.3350179848921478
+day_of_month_scaled,0.3208550362043652
+month_sin_scaled,0.2726415519858838
+quarter_scaled,0.26797669310917177
+year_scaled,0.0352538744261304
