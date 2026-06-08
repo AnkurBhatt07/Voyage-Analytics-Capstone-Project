@@ -11,7 +11,7 @@ predictor = FlightPricePredictor()
 from_cities = pickle.load(open("artifacts/from_cities_list.pkl" , 'rb'))
 agency_list = pickle.load(open("artifacts/agency_list.pkl" , 'rb'))
 flight_types = pickle.load(open("artifacts/flight_type_list.pkl" , 'rb'))
-date_range = pickle.load(open("artifacts/date_range.pkl" , 'rb'))
+# date_range = pickle.load(open("artifacts/date_range.pkl" , 'rb'))
 
 
 @app.route('/' , methods = ['GET'])
@@ -20,8 +20,8 @@ def home():
                            cities = from_cities,
                            agencies = agency_list,
                            flight_types = flight_types,
-                           min_date = date_range['min_date'].date(),
-                           max_date = date_range['max_date'].date()
+                        #    min_date = date_range['min_date'].date(),
+                        #    max_date = date_range['max_date'].date()
                            )
 
 @app.route('/predict' , methods = ['POST'])
