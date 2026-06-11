@@ -6,15 +6,15 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flight-price 
+      app: flightpricepredictor 
   template:
     metadata:
       labels:
-        app: flight-price 
+        app: flightpricepredictor 
     spec:
       containers:
       - name: flight-price-container 
-        image: flight-price-app:latest
+        image: ankurbhatt1611/flightpricepredictor:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000

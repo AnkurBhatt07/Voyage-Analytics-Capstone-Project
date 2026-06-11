@@ -2,3 +2,5 @@ travel_venv
 mlruns
 mlflow.db
 jenkins_data
+testing_preprocessing.ipynb
+pipeline/__pycache__

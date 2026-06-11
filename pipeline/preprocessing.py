@@ -70,11 +70,19 @@ class FlightPreprocessor:
 
         flight_type_scaled = self.flightType_scaler.transform(flight_type_encoded)
 
-        try:
-            df['distance'] = self.city_pair_distance[(df['from'].values[0], df['to'].values[0])]
-            df['time'] = self.city_pair_time[(df['from'].values[0], df['to'].values[0])]
-        except KeyError:
-            raise ValueError("City pair not found in training data.")
+        # Same-city validation
+
+        if df['from'].values[0] == df['to'].values[0]:
+            raise ValueError("Source and Destination cities cannot be the same.")
+
+        city_pair = (df['from'].values[0],df['to'].values[0])
+        # Route validation
+        if city_pair not in self.city_pair_distance:
+            raise ValueError(f"No flights found between {city_pair[0]} and {city_pair[1]} in the training data.")
+        
+        df['distance'] = self.city_pair_distance[(df['from'].values[0], df['to'].values[0])]
+        df['time'] = self.city_pair_time[(df['from'].values[0], df['to'].values[0])]
+
         
 
 
@@ -82,13 +90,30 @@ class FlightPreprocessor:
 
         agency_encoded = self.agency_ohe.transform(df[['agency']])
 
+        if df['agency'].values[0] == 'Flying Drops' and df['flightType'].values[0] in ["economic", "premium"]:
+            raise ValueError("Flying Drops does not operate economic or premium flights.")
+
+
         # Date preprocessing
 
-        df['date'] = pd.to_datetime(df['date'])
-        df['year'] = df['date'].dt.year
-        df['month'] = df['date'].dt.month
-        df['day_of_week'] = df['date'].dt.dayofweek
-        df['day_of_month'] = df['date'].dt.day
+        df["date"] = pd.to_datetime(df["date"])
+
+        df["year"] = df["date"].dt.year
+        df["month"] = df["date"].dt.month
+        df["day_of_week"] = df["date"].dt.dayofweek
+        df["day_of_month"] = df["date"].dt.day
+
+        df["quarter"] = df["date"].dt.quarter
+
+        df["is_weekend"] = (df["day_of_week"].isin([5, 6])).astype(int)
+
+        df["month_sin"] = np.sin(2 * np.pi * df["month"] / 12)
+
+        df["month_cos"] = np.cos(2 * np.pi * df["month"] / 12)
+
+        df["dow_sin"] = np.sin(2 * np.pi * df["day_of_week"] / 7)
+
+        df["dow_cos"] = np.cos(2 * np.pi * df["day_of_week"] / 7)
 
         date_features_scaled = self.date_scaler.transform(df[self.date_cols])
 

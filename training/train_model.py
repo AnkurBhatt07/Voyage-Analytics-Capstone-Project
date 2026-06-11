@@ -6,20 +6,21 @@ import numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.ensemble import GradientBoostingRegressor
+# from sklearn.ensemble import GradientBoostingRegressor
+from xgboost import XGBRegressor
 
 import mlflow 
 import mlflow.sklearn 
 
 artifacts_dir = "artifacts"
 data_path = "data/flights.csv"
-model_path = os.path.join(artifacts_dir, "grad_boost_best_airflow.pkl")
+model_path = os.path.join(artifacts_dir, "xgboost_best.pkl")
 
 
-# best params taken from the mlflow logs for gradient boosting model
-best_params = { "n_estimators" : 200 ,
-               "max_depth" : 8,
-               "learning_rate" : 0.1 ,
+# best params taken from the mlflow logs for XGBoost model
+best_params = { "n_estimators" : 400 ,
+               "max_depth" : 10,
+               "learning_rate" : 0.05,
                "random_state" : 42
                }
 
@@ -60,6 +61,12 @@ def preprocess_data(df : pd.DataFrame , artifacts_path=artifacts_dir):
     df['month'] = df['date'].dt.month
     df['day_of_week'] = df['date'].dt.dayofweek
     df['day_of_month'] = df['date'].dt.day
+    df['quarter'] = df['date'].dt.quarter
+    df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
+    df['month_sin'] = np.sin(2 * np.pi * df['month'] / 12)
+    df['month_cos'] = np.cos(2 * np.pi * df['month'] / 12)
+    df['dow_sin'] = np.sin(2 * np.pi * df['day_of_week'] / 7)
+    df['dow_cos'] = np.cos(2 * np.pi * df['day_of_week'] / 7)
 
     date_features_scaled = date_scaler.transform(df[date_cols])
 
@@ -79,12 +86,12 @@ def preprocess_data(df : pd.DataFrame , artifacts_path=artifacts_dir):
 
     return final_matrix , target 
 
-def train_model(X_train , y_train , params = best_params ):
-    model = GradientBoostingRegressor(
-        n_estimators=params['n_estimators'],
-        max_depth=params['max_depth'],
-        learning_rate=params['learning_rate'],
-        random_state=params['random_state']
+def train_model(X_train , y_train ):
+    model = XGBRegressor(
+        n_estimators=best_params['n_estimators'],
+        max_depth=best_params['max_depth'],
+        learning_rate=best_params['learning_rate'],
+        random_state=best_params['random_state']
     )
 
     model.fit(X_train , y_train)
@@ -111,14 +118,14 @@ def train_and_save_model():
     os.makedirs(artifacts_dir , exist_ok=True)
     df = load_data(data_path)
     X , y = preprocess_data(df , artifacts_path=artifacts_dir)
-    X_train , X_val , y_train , y_val = train_test_split(X , y , test_size=0.2 , random_state=best_params['random_state'])
+    X_train , X_val , y_train , y_val = train_test_split(X , y , test_size=0.2 , random_state=42)
 
 
     mlflow.set_tracking_uri("file:/opt/airflow/mlruns")
     mlflow.set_experiment("flight_price_baseline")
 
 
-    with mlflow.start_run(run_name = 'gradient_boost_airflow_retraining'):
+    with mlflow.start_run(run_name = 'XGB_airflow_retraining'):
         model = train_model(X_train , y_train)
         mae , rmse , r2 = evaluate_model(model , X_val , y_val)
 
@@ -128,7 +135,7 @@ def train_and_save_model():
         mlflow.log_metric("r2" , r2)
 
         save_model(model , model_path)
-        mlflow.sklearn.log_model(model , "gradient_boosting_model_airflow")
+        mlflow.sklearn.log_model(model , "xgboost_model_airflow")
 
         return {
             "mae": mae,

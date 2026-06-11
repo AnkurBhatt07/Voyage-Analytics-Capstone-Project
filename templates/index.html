@@ -21,7 +21,7 @@
     </select>
 
     <label for="flightType">Flight Type</label>
-    <select name="flightType" >
+    <select name="flightType" required>
         {% for ftype in flight_types %}
             <option value="{{ ftype }}">{{ ftype }}</option>
         {% endfor %}
@@ -36,7 +36,7 @@
     
 
     <label for="date">Travel Date</label>
-    <input type="date" name="date" min="{{ min_date }}" max="{{ max_date }}" required>
+    <input type="date" name="date" required>
 
     <button type = "submit">Predict Price</button>
 
