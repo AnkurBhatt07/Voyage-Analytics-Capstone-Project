@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'flight-price-app'
+        IMAGE_NAME = 'flightpricepredictor'
         IMAGE_TAG = 'latest'
         K8S_DEPLOYMENT = 'flight-price-deployment'
     }
@@ -18,7 +18,7 @@ pipeline {
         stage('Verify Airflow Model Exists') {
             steps {
                 script {
-                    if (!fileExists('artifacts/grad_boost_best_airflow.pkl')) {
+                    if (!fileExists('artifacts/xgboost_best.pkl')) {
                         error "Airflow-trained model not found. Run Airflow DAG to generate the model before proceeding."
                     }
                 }
